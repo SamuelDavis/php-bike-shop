@@ -39,4 +39,25 @@
         </div>
         <button type="submit" class="btn btn-success">Save</button>
     </form>
+    <hr>
+    <h1>Todos</h1>
+    <form action="/bike/{{ $bike->id }}/todos" method="post" class="mb-4">
+        @csrf
+        <div class="form-group">
+            <input type="text" class="form-control" name="description" placeholder="New todo description...">
+        </div>
+        <button class="btn btn-primary" type="submit">Save New Todo</button>
+    </form>
+    @foreach($bike->todos as $todo)
+        <div class="alert alert-{{ $todo->completed_at ? "success" : "warning" }}">
+            <a href="/bike/{{ $bike->id }}/todos/{{ $todo->id }}" class="close">Edit</a>
+            <span>{{ $todo->description }}</span>
+            @if($todo->completed_at)
+                <p class="mb-0">
+                    ({{ $todo->completedBy->name }} & {{ $todo->confirmedBy->name }}
+                    on {{ $todo->completed_at->format("Y-m-d") }})
+                </p>
+            @endif
+        </div>
+    @endforeach
 @endsection

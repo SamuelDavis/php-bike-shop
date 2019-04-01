@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Attendance;
 use App\Models\Bike;
+use App\Models\BikeTodo;
 use App\Models\Event;
 use App\Models\Person;
 use Faker\Provider\Base;
@@ -68,6 +69,35 @@ class ModelFaker extends Base
             ->setRelations([
                 Bike::RELATION_SOURCE => $source,
                 Bike::RELATION_OWNER => $owner,
+            ]);
+    }
+
+    public function bikeTodo()
+    {
+        /** @var  $bike */
+        $bike = $this->generator->bike;
+        if ($this->generator->boolean) {
+            $completedAt = Carbon::parse($this->generator->dateTime);
+            /** @var Person $completedBy */
+            $completedBy = $this->generator->person;
+            /** @var Person $confirmedBy */
+            $confirmedBy = $this->generator->person;
+        } else {
+            $completedAt = null;
+            $completedBy = null;
+            $confirmedBy = null;
+        }
+        return (new BikeTodo([
+            BikeTodo::ATTR_DESCRIPTION => $this->generator->sentence,
+            BikeTodo::ATTR_COMPLETED_AT => $completedAt,
+            BikeTodo::ATTR_BIKE_ID => $bike->id,
+            BikeTodo::ATTR_COMPLETED_BY_ID => $completedBy ? $completedBy->id : null,
+            BikeTodo::ATTR_CONFIRMED_BY_ID => $confirmedBy ? $confirmedBy->id : null,
+        ]))
+            ->setRelations([
+                BikeTodo::RELATION_BIKE => $bike,
+                BikeTodo::RELATION_COMPLETED_BY => $completedBy,
+                BikeTodo::RELATION_CONFIRMED_BY => $confirmedBy,
             ]);
     }
 }

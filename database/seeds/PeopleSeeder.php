@@ -1,17 +1,9 @@
 <?php
 
-use Faker\Generator;
-use Illuminate\Database\Seeder;
+use App\Models\Person;
 
 class PeopleSeeder extends Seeder
 {
-    private $faker;
-
-    public function __construct(Generator $faker)
-    {
-        $this->faker = $faker;
-    }
-
     /**
      * Run the database seeds.
      *
@@ -20,7 +12,9 @@ class PeopleSeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < $this->faker->numberBetween(5, 10); $i++) {
-            $this->faker->person->save();
+            /** @var Person $person */
+            $person = $this->faker->person;
+            $person->save();
         }
     }
 }

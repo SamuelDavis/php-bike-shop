@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BikeController;
+use App\Http\Controllers\BikeTodoController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PersonController;
 
@@ -25,3 +26,5 @@ Route::post("/person/{person?}", PersonController::toRoute("savePerson"));
 Route::get("/bikes", BikeController::toRoute("listBikes"));
 Route::get("/bike/{bike?}", BikeController::toRoute("showBike"));
 Route::post("/bike/{bike?}", BikeController::toRoute("saveBike"));
+Route::get("/bike/{bike}/todos/{bikeTodo?}", BikeTodoController::toRoute("showBikeTodo"));
+Route::post("/bike/{bike}/todos/{bikeTodo?}", BikeTodoController::toRoute("saveBikeTodo"));

@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" class="form-control"
-                   value="{{ $person->dob ? $person->dob->format("YYYY-MM-DD") : null }}">
+                   value="{{ $person->dob ? $person->dob->format("Y-m-d") : null }}">
         </div>
         <button type="submit" class="btn btn-success">Save</button>
     </form>

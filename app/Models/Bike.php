@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
+
 /**
  * @property string $description
  * @property float $value
  * @property string $notes
  * @property Person $source
  * @property Person|null $owner
+ * @property BikeTodo[]|Collection $todos
  */
 class Bike extends Model
 {
@@ -39,6 +42,15 @@ class Bike extends Model
             static::ATTR_OWNER_ID,
             Person::ATTR_ID,
             static::RELATION_OWNER
+        );
+    }
+
+    public function todos()
+    {
+        return $this->hasMany(
+            BikeTodo::class,
+            BikeTodo::ATTR_BIKE_ID,
+            static::ATTR_ID
         );
     }
 }
