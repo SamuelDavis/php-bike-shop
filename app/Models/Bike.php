@@ -6,6 +6,8 @@ namespace App\Models;
  * @property string $description
  * @property float $value
  * @property string $notes
+ * @property Person $source
+ * @property Person|null $owner
  */
 class Bike extends Model
 {
