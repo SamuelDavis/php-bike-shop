@@ -3,7 +3,7 @@
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class EventsSeeder extends Seeder
 {
     private $faker;
 
@@ -13,15 +13,14 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call(PeopleSeeder::class);
-        $this->call(EventsSeeder::class);
-        $this->call(AttendanceSeeder::class);
-        $this->call(BikeSeeder::class);
+        for ($i = 0; $i < $this->faker->numberBetween(2, 5); $i++) {
+            $this->faker->event->save();
+        }
     }
 }

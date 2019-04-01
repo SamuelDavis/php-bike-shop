@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Attendance;
+use App\Models\Bike;
 use App\Models\Event;
 use App\Models\Person;
 use Faker\Factory;
@@ -65,6 +66,24 @@ class AppServiceProvider extends ServiceProvider
                         ->setRelation(Attendance::RELATION_EVENT, $event)
                         ->setRelation(Attendance::RELATION_PERSON, $person);
                 }
+
+                public function bike()
+                {
+                    /** @var Person $source */
+                    $source = $this->generator->person;
+                    /** @var Person $owner */
+                    $owner = $this->generator->boolean ? $this->generator->person : null;
+
+                    return (new Bike([
+                        Bike::ATTR_DESCRIPTION => $this->generator->sentence,
+                        Bike::ATTR_VALUE => $this->generator->randomFloat(2, 20, 100),
+                        Bike::ATTR_NOTES => $this->generator->text
+                    ]))
+                        ->setRelations([
+                            Bike::RELATION_SOURCE => $source,
+                            Bike::RELATION_OWNER => $owner,
+                        ]);
+                }
             });
             return $faker;
         });
@@ -79,7 +98,8 @@ class AppServiceProvider extends ServiceProvider
     {
         View::share("mainNav", [
             ["/", "Events"],
-            ["/people", "People"]
+            ["/people", "People"],
+            ["/bikes", "Bikes"],
         ]);
     }
 }

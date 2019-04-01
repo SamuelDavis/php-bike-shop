@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Builders\Builder;
 use App\Models\Attendance;
+use App\Models\Bike;
 use App\Models\Person;
 use Google_Service_Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -126,5 +127,27 @@ class Controller extends BaseController
             ->fill($request->input())
             ->save();
         return Redirect::to("/person/{$person->id}");
+    }
+
+    public function listBikes()
+    {
+        $bikes = Bike::query()->get();
+        return View::make("pages/list-bikes", compact("bikes"));
+    }
+
+    public function showBike(?string $bikeId = null)
+    {
+        $bike = Bike::query()->find($bikeId) ?: new Bike;
+        $people = Person::query()->get();
+        return View::make("pages/edit-bike", compact("bike", "people"));
+    }
+
+    public function saveBike(Request $request, ?string $bikeId = null)
+    {
+        $bike = Bike::query()->find($bikeId) ?: new Bike;
+        $bike
+            ->fill($request->input())
+            ->save();
+        return Redirect::to("/bike/{$bike->id}");
     }
 }

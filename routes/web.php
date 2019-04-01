@@ -19,3 +19,6 @@ Route::post("/event/{event}/{person}", Controller::toRoute("toggleAttendance"));
 Route::get("/people", Controller::toRoute("listPeople"));
 Route::get("/person/{person?}", Controller::toRoute("showPerson"));
 Route::post("/person/{person?}", Controller::toRoute("savePerson"));
+Route::get("/bikes", Controller::toRoute("listBikes"));
+Route::get("/bike/{bike?}", Controller::toRoute("showBike"));
+Route::post("/bike/{bike?}", Controller::toRoute("saveBike"));

@@ -77,7 +77,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
     {
         $relationship = $this->{$relation}();
         if ($relationship instanceof BelongsTo) {
-            $this->{$relationship->getForeignKeyName()} = $value->{$relationship->getOwnerKeyName()};
+            $this->{$relationship->getForeignKeyName()} = $value ? $value->{$relationship->getOwnerKeyName()} : null;
         }
         return parent::setRelation($relation, $value);
     }
