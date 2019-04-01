@@ -20,8 +20,9 @@
                 <a href="/event/{{ $event->id }}" class="btn btn-lg">
                     {{ $event->summary }}
                     <div class="card-text">{{ $event->description }}</div>
-                    <div class="card-text">{{ $event->start->dateTime }}</div>
-                    <div class="card-text">{{ $event->end->dateTime }}</div>
+                    <small>
+                        {{ $event->startDateTime->format("M, d h:i a") }} &dash; {{ $event->endDateTime->format("M, d h:i a") }}
+                    </small>
                 </a>
             </div>
         @endforeach
