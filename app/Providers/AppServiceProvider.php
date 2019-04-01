@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Providers;
+
+use App\Models\Attendance;
+use App\Models\Event;
+use App\Models\Person;
+use Faker\Factory;
+use Faker\Generator;
+use Faker\Provider\Base;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\ServiceProvider;
+use View;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind(Generator::class, function (Application $app) {
+            $faker = Factory::create($app->getLocale());
+            $faker->addProvider(new class($faker) extends Base
+            {
+                public function person()
+                {
+                    return new Person([
+                        Person::ATTR_NAME => $this->generator->name,
+                        Person::ATTR_PHONE => $this->generator->phoneNumber,
+                        Person::ATTR_ADDRESS => $this->generator->address,
+                        Person::ATTR_DOB => Carbon::parse($this->generator->dateTime)
+                    ]);
+                }
+
+                public function event()
+                {
+                    $startsAt = Carbon::parse($this->generator->dateTime);
+                    return new Event([
+                        Event::ATTR_ID => $this->generator->unique()->text,
+                        Event::ATTR_NAME => $this->generator->sentence,
+                        Event::ATTR_DESCRIPTION => $this->generator->sentences(3, true),
+                        Event::ATTR_ADDRESS => $this->generator->address,
+                        Event::ATTR_STARTS_AT => $startsAt,
+                        Event::ATTR_ENDS_AT => $startsAt->copy()->addMinutes($this->generator->randomDigit),
+                    ]);
+                }
+
+                public function attendance()
+                {
+                    /** @var Event $event */
+                    $event = $this->generator->event;
+                    /** @var Person $person */
+                    $person = $this->generator->person;
+                    $signedInAt = Carbon::parse($this->generator->dateTime);
+                    return (new Attendance([
+                        Attendance::ATTR_EVENT_ID => $event->id,
+                        Attendance::ATTR_PERSON_ID => $person->id,
+                        Attendance::ATTR_SIGNED_IN_AT => $signedInAt,
+                        Attendance::ATTR_SIGNED_OUT_AT => $signedInAt->copy()->addMinutes($this->generator->randomDigit),
+                    ]))
+                        ->setRelation(Attendance::RELATION_EVENT, $event)
+                        ->setRelation(Attendance::RELATION_PERSON, $person);
+                }
+            });
+            return $faker;
+        });
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        View::share("mainNav", [
+            ["/", "Events"],
+            ["/people", "People"]
+        ]);
+    }
+}
