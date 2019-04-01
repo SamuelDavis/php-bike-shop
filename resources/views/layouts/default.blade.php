@@ -30,7 +30,10 @@
         </ul>
     </div>
 </nav>
-@yield("body")
+<div class="container">
+    @include("flash::message")
+    @yield("body")
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -11,14 +11,17 @@
 |
 */
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\BikeController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PersonController;
 
-Route::get("/", Controller::toRoute("listEvents"));
-Route::get("/event/{event}", Controller::toRoute("showAttendance"));
-Route::post("/event/{event}/{person}", Controller::toRoute("toggleAttendance"));
-Route::get("/people", Controller::toRoute("listPeople"));
-Route::get("/person/{person?}", Controller::toRoute("showPerson"));
-Route::post("/person/{person?}", Controller::toRoute("savePerson"));
-Route::get("/bikes", Controller::toRoute("listBikes"));
-Route::get("/bike/{bike?}", Controller::toRoute("showBike"));
-Route::post("/bike/{bike?}", Controller::toRoute("saveBike"));
+Route::get("/", EventController::toRoute("listEvents"));
+Route::get("/event/{event}", AttendanceController::toRoute("showAttendance"));
+Route::post("/event/{event}/{person}", AttendanceController::toRoute("toggleAttendance"));
+Route::get("/people", PersonController::toRoute("listPeople"));
+Route::get("/person/{person?}", PersonController::toRoute("showPerson"));
+Route::post("/person/{person?}", PersonController::toRoute("savePerson"));
+Route::get("/bikes", BikeController::toRoute("listBikes"));
+Route::get("/bike/{bike?}", BikeController::toRoute("showBike"));
+Route::post("/bike/{bike?}", BikeController::toRoute("saveBike"));
