@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Http\Requests\EditBikeRequest;
 use App\Models\Bike;
 use App\Models\Person;
 use Flash;
-use Illuminate\Http\Request;
 use Redirect;
 use View;
 
@@ -25,7 +25,7 @@ class BikeController extends Controller
         return View::make("pages/edit-bike", compact("bike", "people"));
     }
 
-    public function saveBike(Request $request, ?string $bikeId = null)
+    public function saveBike(EditBikeRequest $request, ?string $bikeId = null)
     {
         $bike = Bike::query()->find($bikeId) ?: new Bike;
         $bike

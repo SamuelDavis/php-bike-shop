@@ -1,6 +1,7 @@
 @extends("layouts/default")
 
 @section("body")
+    @include("components/errors")
     <form action="/person/{{ $person ? $person->id : "" }}" method="post">
         @csrf
         <div class="form-group">

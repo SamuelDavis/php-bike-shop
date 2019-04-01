@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Http\Requests\EditPersonRequest;
 use App\Models\Person;
 use Flash;
-use Illuminate\Http\Request;
 use Redirect;
 use View;
 
@@ -25,7 +25,7 @@ class PersonController extends Controller
         return View::make("pages/edit-person", compact("person"));
     }
 
-    public function savePerson(Request $request, ?string $personId = null)
+    public function savePerson(EditPersonRequest $request, ?string $personId = null)
     {
         $person = Person::query()->find($personId) ?: new Person;
         $person
