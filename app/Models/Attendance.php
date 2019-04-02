@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
  * @property Person $person
  * @property Carbon $signed_in_at
  * @property Carbon $signed_out_at
+ * @property string $total_time
  */
 class Attendance extends Model
 {
@@ -20,6 +21,11 @@ class Attendance extends Model
     const ATTR_SIGNED_OUT_AT = "signed_out_at";
     const RELATION_EVENT = "event";
     const RELATION_PERSON = "person";
+
+    public $casts = [
+        self::ATTR_SIGNED_IN_AT => "datetime",
+        self::ATTR_SIGNED_OUT_AT => "datetime",
+    ];
 
     public function event()
     {
@@ -39,5 +45,12 @@ class Attendance extends Model
             Person::ATTR_ID,
             static::RELATION_PERSON
         );
+    }
+
+    public function getTotalTimeAttribute()
+    {
+        return $this->signed_out_at
+            ? $this->signed_out_at->longAbsoluteDiffForHumans($this->signed_in_at)
+            : null;
     }
 }

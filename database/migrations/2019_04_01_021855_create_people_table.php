@@ -18,6 +18,7 @@ class CreatePeopleTable extends Migration
             $table->timestamp(Person::CREATED_AT)->nullable();
             $table->timestamp(Person::UPDATED_AT)->nullable();
             $table->string(Person::ATTR_NAME);
+            $table->string(Person::ATTR_EMAIL)->nullable();
             $table->string(Person::ATTR_PHONE)->nullable();
             $table->string(Person::ATTR_ADDRESS)->nullable();
             $table->dateTime(Person::ATTR_DOB)->nullable();

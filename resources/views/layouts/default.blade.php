@@ -28,5 +28,32 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script type="application/javascript">
+    function copyToClipboard(text) {
+        let textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        try {
+            let successful = document.execCommand("copy");
+            if (!successful) {
+                throw new Error(`Copying text was unsuccessful`);
+            }
+        } catch (err) {
+            console.error("Fallback: Oops, unable to copy", err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        Array.prototype.forEach.call(document.querySelectorAll("*[data-copy]"), function (copyable) {
+            copyable.addEventListener("click", function (evt) {
+                copyToClipboard(evt.target.dataset.copy);
+            });
+        });
+    });
+</script>
 </body>
 </html>

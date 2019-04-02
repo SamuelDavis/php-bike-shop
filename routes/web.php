@@ -15,6 +15,7 @@ use App\Http\Controllers\ImportGoogleEvents;
 use App\Http\Controllers\SaveBike;
 use App\Http\Controllers\SaveBikeTodo;
 use App\Http\Controllers\SavePerson;
+use App\Http\Controllers\ShowAdminEventAttendanceTable;
 use App\Http\Controllers\ShowAdminEventList;
 use App\Http\Controllers\ShowAttendanceList;
 use App\Http\Controllers\ShowBikeForm;
@@ -38,4 +39,5 @@ Route::post("/bike/{bike?}", SaveBike::toRoute());
 Route::get("/bike/{bike}/todos/{bikeTodo?}", ShowBikeTodoForm::toRoute());
 Route::post("/bike/{bike}/todos/{bikeTodo?}", SaveBikeTodo::toRoute());
 Route::get("/admin/events", ShowAdminEventList::toRoute());
+Route::get("/admin/event/{event}", ShowAdminEventAttendanceTable::toRoute());
 

@@ -16,9 +16,10 @@ class ModelFaker extends Base
     {
         return new Person([
             Person::ATTR_NAME => $this->generator->name,
+            Person::ATTR_EMAIL => $this->generator->email,
             Person::ATTR_PHONE => $this->generator->phoneNumber,
             Person::ATTR_ADDRESS => $this->generator->address,
-            Person::ATTR_DOB => Carbon::parse($this->generator->dateTime)
+            Person::ATTR_DOB => Carbon::parse($this->generator->dateTime),
         ]);
     }
 
@@ -64,7 +65,7 @@ class ModelFaker extends Base
         return (new Bike([
             Bike::ATTR_DESCRIPTION => $this->generator->sentence,
             Bike::ATTR_VALUE => $this->generator->randomFloat(2, 20, 100),
-            Bike::ATTR_NOTES => $this->generator->text
+            Bike::ATTR_NOTES => $this->generator->text,
         ]))
             ->setRelations([
                 Bike::RELATION_SOURCE => $source,

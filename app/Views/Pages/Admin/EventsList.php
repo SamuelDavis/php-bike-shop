@@ -2,7 +2,7 @@
 
 namespace App\Views\Pages\Admin;
 
-use App\Http\Controllers\ShowAttendanceList;
+use App\Http\Controllers\ShowAdminEventAttendanceTable;
 use App\Models\Event;
 use App\Views\ViewModel;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,6 +21,6 @@ class EventsList extends ViewModel
 
     public function eventHref(Event $event): string
     {
-        return URL::route(ShowAttendanceList::class, compact("event"));
+        return URL::route(ShowAdminEventAttendanceTable::class, compact("event"));
     }
 }

@@ -1,4 +1,4 @@
-<?php /** @var App\Views\Pages\EventsList $vm */ ?>
+<?php /** @var App\Views\Pages\Admin\EventsList $vm */ ?>
 @extends("layouts/default")
 
 @section("body")
@@ -21,7 +21,7 @@
     <div class="d-inline-flex flex-row flex-wrap">
         @foreach($vm->events as $event)
             <div class="card m-1">
-                <a href="/event/{{ $event->id }}" class="btn btn-lg">
+                <a href="{!! $vm->eventHref($event) !!}" class="btn btn-lg">
                     <h5>{{ $event->name }}</h5>
                     <small>{{ $event->timeRange }}</small>
                 </a>

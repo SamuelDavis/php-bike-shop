@@ -15,6 +15,8 @@ use function sprintf;
  * @property string $timeRange
  *
  * @property Person[]|Collection $people
+ * @property Attendance[]|Collection $attendance
+ * @property string $totalTime
  */
 class Event extends Model
 {
@@ -32,6 +34,18 @@ class Event extends Model
         self::ATTR_STARTS_AT => "datetime",
         self::ATTR_ENDS_AT => "datetime",
     ];
+
+    public function attendance()
+    {
+        return $this
+            ->hasMany(
+                Attendance::class,
+                Attendance::ATTR_EVENT_ID,
+                static::ATTR_ID
+            )
+            ->orderBy(Attendance::ATTR_PERSON_ID)
+            ->orderBy(Attendance::ATTR_SIGNED_IN_AT);
+    }
 
     public function people()
     {
@@ -54,5 +68,10 @@ class Event extends Model
             $this->starts_at->format("M d, h:i a"),
             $this->ends_at->format("M d, h:i a")
         );
+    }
+
+    public function getTotalTimeAttribute(): string
+    {
+        return $this->starts_at->longAbsoluteDiffForHumans($this->ends_at);
     }
 }
