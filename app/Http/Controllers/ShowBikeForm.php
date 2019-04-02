@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Models\Bike;
 use App\Models\Person;
-use View;
+use App\Views\Pages\BikeForm;
 
 class ShowBikeForm extends Controller
 {
@@ -13,6 +13,6 @@ class ShowBikeForm extends Controller
     {
         $bike = $bike ?: new Bike;
         $people = Person::query()->get();
-        return View::make("pages/edit-bike", compact("bike", "people"));
+        return new BikeForm($bike, $people);
     }
 }

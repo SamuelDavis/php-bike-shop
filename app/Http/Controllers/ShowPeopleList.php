@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Models\Person;
-use View;
+use App\Views\Pages\PeopleList;
 
 class ShowPeopleList extends Controller
 {
@@ -13,6 +13,6 @@ class ShowPeopleList extends Controller
         $people = Person::query()
             ->orderBy(Person::ATTR_NAME)
             ->get();
-        return View::make("pages/list-people", compact("people"));
+        return new PeopleList($people);
     }
 }

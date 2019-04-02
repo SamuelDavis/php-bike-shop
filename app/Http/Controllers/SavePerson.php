@@ -17,7 +17,7 @@ class SavePerson extends Controller
             ->fill($request->input())
             ->save();
         Flash::success("Person saved.");
-        return Redirect::to(ShowPersonForm::class, [
+        return Redirect::route(ShowPersonForm::class, [
             "person" => $person->id,
         ]);
     }

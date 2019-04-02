@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string $description
  * @property float $value
  * @property string $notes
+ * @property int $source_id
+ * @property int $owner_id
  * @property Person $source
  * @property Person|null $owner
  * @property BikeTodo[]|Collection $todos

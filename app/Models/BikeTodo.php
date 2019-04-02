@@ -6,8 +6,10 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property string $description
- * @property Carbon $completedAt
+ * @property Carbon $completed_at
  * @property Bike $bike
+ * @property int completed_by_id
+ * @property int confirmed_by_id
  * @property Person|null $completedBy
  * @property Person|null $confirmedBy
  */

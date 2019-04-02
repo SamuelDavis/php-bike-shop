@@ -1,3 +1,4 @@
+<?php /** @var App\Views\Pages\EventsList $vm */ ?>
 @extends("layouts/default")
 
 @section("body")
@@ -21,7 +22,7 @@
         </form>
     </div>
     <div class="d-inline-flex flex-row flex-wrap">
-        @foreach($events as $event)
+        @foreach($vm->events as $event)
             <div class="card m-1">
                 <a href="/event/{{ $event->id }}" class="btn btn-lg">
                     <h5>{{ $event->name }}</h5>

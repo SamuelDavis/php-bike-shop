@@ -6,7 +6,7 @@ use App;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\Person;
-use View;
+use App\Views\Pages\AttendanceList;
 
 class ShowAttendanceList extends Controller
 {
@@ -23,6 +23,6 @@ class ShowAttendanceList extends Controller
             ->sortByDesc(function (Person $person) use ($attendance) {
                 return $attendance->contains($person->id);
             });
-        return View::make("pages/attendance", compact("event", "attendance", "people"));
+        return new AttendanceList($event, $people, $attendance);
     }
 }
