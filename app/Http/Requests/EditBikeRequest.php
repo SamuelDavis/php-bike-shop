@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Bike;
 use App\Models\Person;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class EditBikeRequest extends FormRequest

@@ -3,35 +3,29 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Http\Requests\ListEventsRequest;
 use App\Models\Event;
 use Google_Service_Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Redirect;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
 use View;
 use function compact;
-use function http_build_query;
 
 class EventController extends Controller
 {
-    public function listEvents(Request $request)
+    public function listEvents(ListEventsRequest $request)
     {
-        $from = Carbon::parse($request->from ?: Carbon::now())->startOfDay();
-        $to = Carbon::parse($request->to ?: Carbon::now())->endOfDay();
         $events = Event::query()
-            ->where(Event::ATTR_STARTS_AT, ">=", $from)
-            ->where(Event::ATTR_ENDS_AT, "<", $to)
+            ->where(Event::ATTR_STARTS_AT, ">=", $request->from)
+            ->where(Event::ATTR_ENDS_AT, "<", $request->to)
             ->get();
         return View::make("pages/list-events", compact("events"));
     }
 
-    public function importGoogleEvents(Request $request)
+    public function importGoogleEvents(ListEventsRequest $request)
     {
-        $from = Carbon::parse($request->from ?: Carbon::now())->startOfDay();
-        $to = Carbon::parse($request->to ?: Carbon::now())->endOfDay();
         try {
-            $events = GoogleEvent::get($from, $to);
+            $events = GoogleEvent::get($request->from, $request->to);
             $existingEvents = Event
                 ::query()
                 ->whereIn(Event::ATTR_ID, $events->map(function (GoogleEvent $event) {
@@ -56,9 +50,9 @@ class EventController extends Controller
                 App::abort(404, "Google Calendar not Found");
             }
         }
-        return Redirect::to("/?" . http_build_query([
-                "from" => $from->toDateString(),
-                "to" => $to->toDateString(),
-            ]));
+        return Redirect::to($request->rewriteUrl([
+            "from" => $request->from->toDateString(),
+            "to" => $request->to->toDateString(),
+        ]));
     }
 }
