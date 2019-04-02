@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App;
 use App\Http\Requests\ListEventsRequest;
 use App\Models\Event;
-use App\Views\Pages\Admin\EventsList;
+use App\Views\Components\EventList;
+use App\Views\Pages\Container;
+use URL;
+use function compact;
 
 class ShowAdminEventList extends Controller
 {
@@ -15,6 +18,9 @@ class ShowAdminEventList extends Controller
             ->where(Event::ATTR_STARTS_AT, ">=", $request->from)
             ->where(Event::ATTR_ENDS_AT, "<", $request->to)
             ->get();
-        return new EventsList($events);
+        $eventList = new EventList($events, function (Event $event) {
+            return URL::route(ShowAdminEventAttendanceTable::class, compact("event"));
+        });
+        return new Container($eventList);
     }
 }
