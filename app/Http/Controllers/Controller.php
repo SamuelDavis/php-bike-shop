@@ -15,7 +15,7 @@ class Controller extends BaseController
     public static function toRoute(string $method = "__invoke")
     {
         return [
-            "as" => static::class . "@{$method}",
+            "as" => static::class,
             "uses" => static::class . "@{$method}"
         ];
     }

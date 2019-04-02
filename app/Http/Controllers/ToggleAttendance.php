@@ -9,27 +9,11 @@ use App\Models\Event;
 use App\Models\Person;
 use Illuminate\Support\Carbon;
 use Redirect;
-use View;
+use function compact;
 
-class AttendanceController extends Controller
+class ToggleAttendance extends Controller
 {
-    public function showAttendance(Event $event)
-    {
-        $attendance = Attendance::query()
-            ->where(Attendance::ATTR_EVENT_ID, $event->id)
-            ->whereNull(Attendance::ATTR_SIGNED_OUT_AT)
-            ->pluck(Attendance::ATTR_PERSON_ID)
-            ->unique();
-        $people = Person::query()
-            ->orderBy(Person::ATTR_NAME)
-            ->get()
-            ->sortByDesc(function (Person $person) use ($attendance) {
-                return $attendance->contains($person->id);
-            });
-        return View::make("pages/attendance", compact("event", "attendance", "people"));
-    }
-
-    public function toggleAttendance(Event $event, Person $person)
+    public function __invoke(Event $event, Person $person)
     {
         /** @var Attendance $existing */
         $existing = Attendance
@@ -57,6 +41,6 @@ class AttendanceController extends Controller
                 ])
                 ->save();
         }
-        return Redirect::to("/event/{$event->id}");
+        return Redirect::route(ShowAttendanceList::class, compact("event"));
     }
 }

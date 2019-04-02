@@ -11,21 +11,28 @@
 |
 */
 
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\BikeController;
-use App\Http\Controllers\BikeTodoController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\PersonController;
+use App\Http\Controllers\ImportGoogleEvents;
+use App\Http\Controllers\SaveBike;
+use App\Http\Controllers\SaveBikeTodo;
+use App\Http\Controllers\SavePerson;
+use App\Http\Controllers\ShowAttendanceList;
+use App\Http\Controllers\ShowBikeForm;
+use App\Http\Controllers\ShowBikesList;
+use App\Http\Controllers\ShowBikeTodoForm;
+use App\Http\Controllers\ShowEventsList;
+use App\Http\Controllers\ShowPeopleList;
+use App\Http\Controllers\ShowPersonForm;
+use App\Http\Controllers\ToggleAttendance;
 
-Route::get("/", EventController::toRoute("listEvents"));
-Route::post("/", EventController::toRoute("importGoogleEvents"));
-Route::get("/event/{event}", AttendanceController::toRoute("showAttendance"));
-Route::post("/event/{event}/{person}", AttendanceController::toRoute("toggleAttendance"));
-Route::get("/people", PersonController::toRoute("listPeople"));
-Route::get("/person/{person?}", PersonController::toRoute("showPerson"));
-Route::post("/person/{person?}", PersonController::toRoute("savePerson"));
-Route::get("/bikes", BikeController::toRoute("listBikes"));
-Route::get("/bike/{bike?}", BikeController::toRoute("showBike"));
-Route::post("/bike/{bike?}", BikeController::toRoute("saveBike"));
-Route::get("/bike/{bike}/todos/{bikeTodo?}", BikeTodoController::toRoute("showBikeTodo"));
-Route::post("/bike/{bike}/todos/{bikeTodo?}", BikeTodoController::toRoute("saveBikeTodo"));
+Route::get("/", ShowEventsList::toRoute());
+Route::post("/", ImportGoogleEvents::toRoute());
+Route::get("/event/{event}", ShowAttendanceList::toRoute());
+Route::post("/event/{event}/{person}", ToggleAttendance::toRoute());
+Route::get("/people", ShowPeopleList::toRoute());
+Route::get("/person/{person?}", ShowPersonForm::toRoute());
+Route::post("/person/{person?}", SavePerson::toRoute());
+Route::get("/bikes", ShowBikesList::toRoute());
+Route::get("/bike/{bike?}", ShowBikeForm::toRoute());
+Route::post("/bike/{bike?}", SaveBike::toRoute());
+Route::get("/bike/{bike}/todos/{bikeTodo?}", ShowBikeTodoForm::toRoute());
+Route::post("/bike/{bike}/todos/{bikeTodo?}", SaveBikeTodo::toRoute());

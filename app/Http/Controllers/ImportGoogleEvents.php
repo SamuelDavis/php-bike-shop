@@ -8,21 +8,10 @@ use App\Models\Event;
 use Google_Service_Exception;
 use Redirect;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
-use View;
-use function compact;
 
-class EventController extends Controller
+class ImportGoogleEvents extends Controller
 {
-    public function listEvents(ListEventsRequest $request)
-    {
-        $events = Event::query()
-            ->where(Event::ATTR_STARTS_AT, ">=", $request->from)
-            ->where(Event::ATTR_ENDS_AT, "<", $request->to)
-            ->get();
-        return View::make("pages/list-events", compact("events"));
-    }
-
-    public function importGoogleEvents(ListEventsRequest $request)
+    public function __invoke(ListEventsRequest $request)
     {
         try {
             $events = GoogleEvent::get($request->from, $request->to);
@@ -50,9 +39,9 @@ class EventController extends Controller
                 App::abort(404, "Google Calendar not Found");
             }
         }
-        return Redirect::to($request->rewriteUrl([
+        return Redirect::route(ShowEventsList::class, [
             "from" => $request->from->toDateString(),
             "to" => $request->to->toDateString(),
-        ]));
+        ]);
     }
 }

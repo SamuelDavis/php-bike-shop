@@ -4,7 +4,11 @@ namespace App\Http\Requests;
 
 use App\Models\BikeTodo;
 
-class EditBikeToDoRequest extends FormRequest
+/**
+ * @property int completed_by_id
+ * @property int confirmed_by_id
+ */
+class SaveBikeToDoRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

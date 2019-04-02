@@ -2,25 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EditBikeToDoRequest;
+use App\Http\Requests\SaveBikeToDoRequest;
 use App\Models\Bike;
 use App\Models\BikeTodo;
 use App\Models\Person;
 use Flash;
 use Redirect;
-use View;
+use function compact;
 
-class BikeTodoController extends Controller
+class SaveBikeTodo extends Controller
 {
-    public function showBikeTodo(Bike $bike, BikeTodo $bikeTodo = null)
-    {
-        $bikeTodo = $bikeTodo ?: new BikeTodo;
-        $bikeTodo->setRelation(BikeTodo::RELATION_BIKE, $bike);
-        $people = Person::query()->get();
-        return View::make("pages/edit-bike-todo", compact("bikeTodo", "people"));
-    }
-
-    public function saveBikeTodo(EditBikeToDoRequest $request, Bike $bike, BikeTodo $bikeTodo = null)
+    public function __invoke(SaveBikeToDoRequest $request, Bike $bike, BikeTodo $bikeTodo = null)
     {
         /** @var Bike $bike */
         $bikeTodo = $bikeTodo ?: new BikeTodo;
@@ -37,6 +29,6 @@ class BikeTodoController extends Controller
             ->save();
         Flash::success("Bike Todo Saved.");
 
-        return Redirect::to("/bike/{$bike->id}");
+        return Redirect::route(ShowBikeForm::class, compact("bike"));
     }
 }
