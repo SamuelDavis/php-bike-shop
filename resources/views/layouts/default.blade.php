@@ -12,24 +12,7 @@
     <title>{{ Config::get("app.name") }} - @yield("title")</title>
 </head>
 <body>
-<?php $navId = uniqid("nav_") ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">{{ Config::get("app.name") }}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#<?= $navId ?>"
-            aria-controls="<?= $navId ?>" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="<?= $navId ?>">
-        <ul class="navbar-nav mr-auto">
-            @foreach ($mainNav as [$href, $label])
-                <li class="nav-item {{ in_array(Route::current()->uri, [$href, ltrim($href, "/")]) ? "active" : "" }}">
-                    <a class="nav-link" href="{{ $href }}">{{ $label }}</a>
-                </li>
-            @endforeach
-        </ul>
-    </div>
-</nav>
+{!! $mainNav !!}
 <div class="container">
     @include("flash::message")
     @yield("body")

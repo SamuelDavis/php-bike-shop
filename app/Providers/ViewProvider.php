@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Views\Components\MainNav;
 use Illuminate\Support\ServiceProvider;
 use View;
 
@@ -24,10 +25,6 @@ class ViewProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share("mainNav", [
-            ["/", "Events"],
-            ["/people", "People"],
-            ["/bikes", "Bikes"],
-        ]);
+        View::share("mainNav", new MainNav);
     }
 }
