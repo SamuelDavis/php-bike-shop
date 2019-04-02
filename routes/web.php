@@ -18,6 +18,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PersonController;
 
 Route::get("/", EventController::toRoute("listEvents"));
+Route::post("/", EventController::toRoute("importGoogleEvents"));
 Route::get("/event/{event}", AttendanceController::toRoute("showAttendance"));
 Route::post("/event/{event}/{person}", AttendanceController::toRoute("toggleAttendance"));
 Route::get("/people", PersonController::toRoute("listPeople"));

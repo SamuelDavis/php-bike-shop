@@ -18,16 +18,16 @@ class BikeController extends Controller
         return View::make("pages/list-bikes", compact("bikes"));
     }
 
-    public function showBike(?string $bikeId = null)
+    public function showBike(Bike $bike = null)
     {
-        $bike = Bike::query()->find($bikeId) ?: new Bike;
+        $bike = $bike ?: new Bike;
         $people = Person::query()->get();
         return View::make("pages/edit-bike", compact("bike", "people"));
     }
 
-    public function saveBike(EditBikeRequest $request, ?string $bikeId = null)
+    public function saveBike(EditBikeRequest $request, Bike $bike = null)
     {
-        $bike = Bike::query()->find($bikeId) ?: new Bike;
+        $bike = $bike ?: new Bike;
         $bike
             ->fill($request->input())
             ->save();

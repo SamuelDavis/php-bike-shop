@@ -19,15 +19,15 @@ class PersonController extends Controller
         return View::make("pages/list-people", compact("people"));
     }
 
-    public function showPerson(?string $personId = null)
+    public function showPerson(Person $person = null)
     {
-        $person = Person::query()->find($personId) ?: new Person;
+        $person = $person ?: new Person;
         return View::make("pages/edit-person", compact("person"));
     }
 
-    public function savePerson(EditPersonRequest $request, ?string $personId = null)
+    public function savePerson(EditPersonRequest $request, Person $person = null)
     {
-        $person = Person::query()->find($personId) ?: new Person;
+        $person = $person ?: new Person;
         $person
             ->fill($request->input())
             ->save();

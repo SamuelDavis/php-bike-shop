@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Attendance;
+use App\Models\Event;
 use App\Models\Person;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -24,11 +25,11 @@ class CreateAttendancesTable extends Migration
 
         Schema::table(Attendance::TABLE, function (Blueprint $table) {
             $table->string(Attendance::ATTR_EVENT_ID);
-//            $table
-//                ->foreign(Attendance::ATTR_EVENT_ID)
-//                ->references(Event::ATTR_ID)
-//                ->on(Event::TABLE)
-//                ->onDelete("cascade");
+            $table
+                ->foreign(Attendance::ATTR_EVENT_ID)
+                ->references(Event::ATTR_ID)
+                ->on(Event::TABLE)
+                ->onDelete("cascade");
             $table->index(Attendance::ATTR_EVENT_ID);
         });
 

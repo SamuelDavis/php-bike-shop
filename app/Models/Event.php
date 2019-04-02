@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
+use function sprintf;
 
 /**
  * @property string $name
@@ -11,6 +12,7 @@ use Illuminate\Support\Carbon;
  * @property string $address
  * @property Carbon $starts_at
  * @property Carbon $ends_at
+ * @property string $timeRange
  *
  * @property Person[]|Collection $people
  */
@@ -26,6 +28,11 @@ class Event extends Model
 
     public $incrementing = false;
 
+    public $casts = [
+        self::ATTR_STARTS_AT => "datetime",
+        self::ATTR_ENDS_AT => "datetime",
+    ];
+
     public function people()
     {
         return $this
@@ -38,5 +45,14 @@ class Event extends Model
                 Attendance::ATTR_PERSON_ID
             )
             ->whereNull(Attendance::ATTR_SIGNED_OUT_AT);
+    }
+
+    public function getTimeRangeAttribute()
+    {
+        return sprintf(
+            "%s - %s",
+            $this->starts_at->format("M d, h:i a"),
+            $this->ends_at->format("M d, h:i a")
+        );
     }
 }

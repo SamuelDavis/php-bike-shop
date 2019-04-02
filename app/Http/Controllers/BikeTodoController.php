@@ -12,24 +12,22 @@ use View;
 
 class BikeTodoController extends Controller
 {
-    public function showBikeTodo(?string $bikeId = null, ?string $bikeTodoId = null)
+    public function showBikeTodo(Bike $bike, BikeTodo $bikeTodo = null)
     {
-        $bike = Bike::query()->findOrFail($bikeId);
-        $todo = BikeTodo::query()->find($bikeTodoId) ?: new BikeTodo;
-        $todo->setRelation(BikeTodo::RELATION_BIKE, $bike);
+        $bikeTodo = $bikeTodo ?: new BikeTodo;
+        $bikeTodo->setRelation(BikeTodo::RELATION_BIKE, $bike);
         $people = Person::query()->get();
-        return View::make("pages/edit-bike-todo", compact("todo", "people"));
+        return View::make("pages/edit-bike-todo", compact("bikeTodo", "people"));
     }
 
-    public function saveBikeTodo(EditBikeToDoRequest $request, ?string $bikeId = null, ?string $bikeTodoId = null)
+    public function saveBikeTodo(EditBikeToDoRequest $request, Bike $bike, BikeTodo $bikeTodo = null)
     {
         /** @var Bike $bike */
-        $bike = Bike::query()->findOrFail($bikeId);
-        $todo = BikeTodo::query()->find($bikeTodoId) ?: new BikeTodo;
+        $bikeTodo = $bikeTodo ?: new BikeTodo;
         $completedBy = Person::query()->find($request->completed_by_id);
         $confirmedBy = Person::query()->find($request->confirmed_by_id);
 
-        $todo
+        $bikeTodo
             ->fill($request->input())
             ->setRelations([
                 BikeTodo::RELATION_BIKE => $bike,

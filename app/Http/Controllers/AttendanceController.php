@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Builders\Builder;
 use App\Models\Attendance;
+use App\Models\Event;
 use App\Models\Person;
 use Illuminate\Support\Carbon;
 use Redirect;
@@ -12,11 +13,10 @@ use View;
 
 class AttendanceController extends Controller
 {
-    public function showAttendance(?string $eventId = null)
+    public function showAttendance(Event $event)
     {
-        $event = $this->lookupEvent($eventId);
         $attendance = Attendance::query()
-            ->where(Attendance::ATTR_EVENT_ID, $eventId)
+            ->where(Attendance::ATTR_EVENT_ID, $event->id)
             ->whereNull(Attendance::ATTR_SIGNED_OUT_AT)
             ->pluck(Attendance::ATTR_PERSON_ID)
             ->unique();
@@ -29,10 +29,8 @@ class AttendanceController extends Controller
         return View::make("pages/attendance", compact("event", "attendance", "people"));
     }
 
-    public function toggleAttendance(string $eventId, string $personId)
+    public function toggleAttendance(Event $event, Person $person)
     {
-        $event = $this->lookupEvent($eventId);
-        $person = Person::query()->findOrFail($personId);
         /** @var Attendance $existing */
         $existing = Attendance
             ::query()

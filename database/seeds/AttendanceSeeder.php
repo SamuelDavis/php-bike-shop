@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Attendance;
+use App\Models\Event;
 use App\Models\Person;
-use Spatie\GoogleCalendar\Event;
 
 class AttendanceSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class AttendanceSeeder extends Seeder
      */
     public function run()
     {
-        $events = Event::get()->all();
+        $events = Event::query()->get()->all();
         $people = Person::query()->get()->all();
 
         for ($i = 0; $i < $this->faker->numberBetween(5, 10); $i++) {
