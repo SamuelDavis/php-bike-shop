@@ -1,5 +1,5 @@
 <?php /** @var App\Views\Pages\Container $vm */ ?>
-@extends("layouts/default")
+@extends("layouts.default")
 
 @section("body")
     @if($vm->getArgs())

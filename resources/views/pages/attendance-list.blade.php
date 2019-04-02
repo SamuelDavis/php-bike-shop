@@ -1,5 +1,5 @@
 <?php /** @var App\Views\Pages\AttendanceList $vm */ ?>
-@extends("layouts/default")
+@extends("layouts.default")
 
 @section("body")
     <div class="card text-center mb-2">

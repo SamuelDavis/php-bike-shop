@@ -1,5 +1,5 @@
 <?php /** @var App\Views\Pages\PeopleList $vm */ ?>
-@extends("layouts/default")
+@extends("layouts.default")
 
 @section("body")
     <div class="d-inline-flex flex-row flex-wrap">

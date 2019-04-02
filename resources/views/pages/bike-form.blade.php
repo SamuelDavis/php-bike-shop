@@ -1,8 +1,8 @@
 <?php /** @var App\Views\Pages\BikeForm $vm */ ?>
-@extends("layouts/default")
+@extends("layouts.default")
 
 @section("body")
-    @include("components/errors")
+    @include("components.errors")
     <form action="{!! $vm->actionHref() !!}" method="post">
         @csrf
         <div class="form-group">
