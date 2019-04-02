@@ -49,10 +49,12 @@ class Bike extends Model
 
     public function todos()
     {
-        return $this->hasMany(
-            BikeTodo::class,
-            BikeTodo::ATTR_BIKE_ID,
-            static::ATTR_ID
-        );
+        return $this
+            ->hasMany(
+                BikeTodo::class,
+                BikeTodo::ATTR_BIKE_ID,
+                static::ATTR_ID
+            )
+            ->orderBy(BikeTodo::ATTR_COMPLETED_AT);
     }
 }
