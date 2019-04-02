@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App;
 use App\Http\Requests\ListEventsRequest;
 use App\Models\Event;
-use App\Views\Pages\EventsList;
+use App\Views\Pages\Admin\EventsList;
 
-class ShowEventsList extends Controller
+class ShowAdminEventList extends Controller
 {
     public function __invoke(ListEventsRequest $request)
     {

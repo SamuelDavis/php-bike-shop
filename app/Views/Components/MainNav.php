@@ -2,18 +2,21 @@
 
 namespace App\Views\Components;
 
+use App\Http\Controllers\ShowAdminEventList;
 use App\Http\Controllers\ShowBikesList;
 use App\Http\Controllers\ShowEventsList;
 use App\Http\Controllers\ShowPeopleList;
 use App\Views\ViewModel;
+use Config;
 use Route;
 use URL;
 use function uniqid;
 
 class MainNav extends ViewModel
 {
-    /** @var string */
     public $id;
+    public $homeHref;
+    public $brand;
     /** @var array[] */
     public $mainNav;
     /** @var array[] */
@@ -23,13 +26,15 @@ class MainNav extends ViewModel
     {
         parent::__construct();
         $this->id = uniqid("nav_");
+        $this->homeHref = URL::route(ShowEventsList::class);
+        $this->brand = Config::get("app.name");
         $this->mainNav = [
             [URL::route(ShowEventsList::class), "Events"],
             [URL::route(ShowPeopleList::class), "People"],
             [URL::route(ShowBikesList::class), "Bikes"],
         ];
         $this->adminNav = [
-            ["#", "Example"],
+            [URL::route(ShowAdminEventList::class), "Attendance"],
         ];
     }
 

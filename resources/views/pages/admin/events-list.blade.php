@@ -16,15 +16,11 @@
             </div>
             <button class="btn btn-success">Filter</button>
         </form>
-        <form action="" method="post" class="form-inline float-sm-left float-md-right">
-            @csrf
-            <button class="btn btn-info" type="submit">Refresh</button>
-        </form>
     </div>
     <div class="d-inline-flex flex-row flex-wrap">
         @foreach($vm->events as $event)
             <div class="card m-1">
-                <a href="{!! $vm->eventHref($event) !!}" class="btn btn-lg">
+                <a href="/event/{{ $event->id }}" class="btn btn-lg">
                     <h5>{{ $event->name }}</h5>
                     <small>{{ $event->timeRange }}</small>
                 </a>

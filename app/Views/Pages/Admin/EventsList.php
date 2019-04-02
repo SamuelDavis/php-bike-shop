@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Views\Pages;
+namespace App\Views\Pages\Admin;
 
 use App\Http\Controllers\ShowAttendanceList;
 use App\Models\Event;
 use App\Views\ViewModel;
 use Illuminate\Database\Eloquent\Collection;
 use URL;
-use function compact;
 
 class EventsList extends ViewModel
 {
