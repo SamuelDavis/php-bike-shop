@@ -17,6 +17,7 @@
             <button class="btn btn-success">Filter</button>
         </form>
     </div>
+    <div class="clearfix"></div>
     <div class="d-inline-flex flex-row flex-wrap">
         @foreach($vm->events as $event)
             <div class="card m-1">
