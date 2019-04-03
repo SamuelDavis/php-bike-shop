@@ -25,8 +25,22 @@ class AttendanceList extends ViewModel
         $this->attendance = $attendance;
     }
 
+    public function signedInPeople(): EloquentCollection
+    {
+        return $this->people->filter(function (Person $person) {
+            return $this->isActive($person);
+        });
+    }
+
     public function isActive(Person $person): bool
     {
         return $this->attendance->contains($person->id);
+    }
+
+    public function signedOutPeople(): EloquentCollection
+    {
+        return $this->people->filter(function (Person $person) {
+            return !$this->isActive($person);
+        });
     }
 }

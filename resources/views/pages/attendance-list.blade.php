@@ -7,15 +7,36 @@
         <div class="card-text">{{ $vm->event->description }}</div>
         <small>{{ $vm->event->timeRange }}</small>
     </div>
-    <div class="d-inline-flex flex-row flex-wrap">
-        @foreach($vm->people as $person)
-            <div class="card m-1">
-                <form action="/event/{{ $vm->event->id }}/{{ $person->id }}" method="post">
-                    @csrf
-                    <button type="submit"
-                            class="btn btn-lg btn-{{ $vm->isActive($person) ? "default" : "secondary" }}">{{ $person->name }}</button>
-                </form>
+    <div class="row">
+        <div class="col col-xs-6">
+            <h1 class="text-center">Signed In</h1>
+            <hr>
+            <div class="list-group">
+                @foreach($vm->signedInPeople() as $person)
+                    <div class="card">
+                        <form action="/event/{{ $vm->event->id }}/{{ $person->id }}" method="post">
+                            @csrf
+                            <button type="submit"
+                                    class="btn btn-block btn-secondary">{{ $person->name }}</button>
+                        </form>
+                    </div>
+                @endforeach
             </div>
-        @endforeach
+        </div>
+        <div class="col col-xs-6">
+            <h1 class="text-center">Signed Out</h1>
+            <hr>
+            <div class="list-group">
+                @foreach($vm->signedOutPeople() as $person)
+                    <div class="card">
+                        <form action="/event/{{ $vm->event->id }}/{{ $person->id }}" method="post">
+                            @csrf
+                            <button type="submit"
+                                    class="btn btn-block btn-secondary">{{ $person->name }}</button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 @endsection
