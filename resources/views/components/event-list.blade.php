@@ -1,18 +1,20 @@
-<?php /** @var App\Views\Components\EventList */ ?>
+<?php /** @var App\Views\Components\EventList $vm */ ?>
 <div>
-    <form action="" method="get" class="form-inline float-left">
-        <div class="form-group mr-1">
-            <label for="from" class="m-1">From</label>
-            <input type="date" class="form-control" name="from" id="from"
-                   value="{{ Request::query("from", now()->format("Y-m-d")) }}">
-        </div>
-        <div class="form-group m-1">
-            <label for="to" class="mr-1">To</label>
-            <input type="date" class="form-control" name="to" id="to"
-                   value="{{ Request::query("to", now()->format("Y-m-d")) }}">
-        </div>
-        <button class="btn btn-success">Filter</button>
-    </form>
+    @if($vm->withForm)
+        <form action="" method="get" class="form-inline float-left">
+            <div class="form-group mr-1">
+                <label for="from" class="m-1">From</label>
+                <input type="date" class="form-control" name="from" id="from"
+                       value="{{ Request::query("from", now()->format("Y-m-d")) }}">
+            </div>
+            <div class="form-group m-1">
+                <label for="to" class="mr-1">To</label>
+                <input type="date" class="form-control" name="to" id="to"
+                       value="{{ Request::query("to", now()->format("Y-m-d")) }}">
+            </div>
+            <button class="btn btn-success">Filter</button>
+        </form>
+    @endif
     @if($vm->withPost)
         <form action="" method="post" class="form-inline float-sm-left float-md-right">
             @csrf

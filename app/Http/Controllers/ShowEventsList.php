@@ -20,7 +20,7 @@ class ShowEventsList extends Controller
             ->get();
         $eventList = new EventList($events, function (Event $event) {
             return URL::route(ShowAttendanceList::class, compact("event"));
-        }, true);
+        });
         return new Container($eventList);
     }
 }

@@ -11,14 +11,17 @@ class EventList extends ViewModel
 {
     /** @var Collection|Event[] */
     public $events;
+    public $withForm;
     public $withPost;
+
     private $hrefGen;
 
-    public function __construct(Collection $events, callable $hrefGen, $withPost = false)
+    public function __construct(Collection $events, callable $hrefGen, $withForm = false, $withPost = false)
     {
         parent::__construct();
         $this->events = $events;
         $this->hrefGen = $hrefGen;
+        $this->withForm = $withForm;
         $this->withPost = $withPost;
     }
 
