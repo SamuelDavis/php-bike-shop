@@ -16,9 +16,9 @@ class Alert extends ViewModel
         $this->type = "default";
     }
 
-    public function info(): self
+    public function secondary(): self
     {
-        $this->type = "info";
+        $this->type = "secondary";
         return $this;
     }
 }

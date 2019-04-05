@@ -16,7 +16,7 @@
         </form>
     @endif
     @if($vm->withPost)
-        <form action="" method="post" class="form-inline float-sm-left float-md-right">
+        <form action="" method="post" class="form-inline">
             @csrf
             <button class="btn btn-info" type="submit">Refresh</button>
         </form>

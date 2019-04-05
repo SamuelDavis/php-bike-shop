@@ -15,7 +15,7 @@ class ShowEventsList extends Controller
 {
     public function __invoke(ListEventsRequest $request)
     {
-        $helpText = (new Alert("Select an event to log into below."))->info();
+        $helpText = (new Alert("Select an event to log into below."))->secondary();
         $events = Event::query()
             ->where(Event::ATTR_STARTS_AT, ">=", $request->from)
             ->where(Event::ATTR_ENDS_AT, "<", $request->to)
