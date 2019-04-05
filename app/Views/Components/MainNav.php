@@ -29,7 +29,7 @@ class MainNav extends ViewModel
         $this->homeHref = URL::route(ShowEventsList::class);
         $this->brand = Config::get("app.name");
         $this->mainNav = [
-            [URL::route(ShowEventsList::class), "Events"],
+            [URL::route(ShowEventsList::class), "Log into Event"],
             [URL::route(ShowPeopleList::class), "People"],
             [URL::route(ShowBikesList::class), "Bikes"],
         ];
